@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require( 'cors' )
 const { json, urlencoded } = require( 'body-parser' )
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 80
 const app = express()
 
 app.use( json() )
@@ -11,8 +11,8 @@ app.use( cors() )
 
 app.get('/', (req, res) => {
     res.send( {
-        sistema: 'Organizador de trabalhos acadêmicos',
-        grupo: 'Javier Correa, Kerollyn, Thiago Lacerda'
+        system: 'Organizador de trabalhos acadêmicos',
+        team: 'Javier Correa, Kerollyn, Thiago Lacerda'
     } )
 })
 
