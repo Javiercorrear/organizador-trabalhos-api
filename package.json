@@ -2,9 +2,10 @@
   "name": "organizador-trabalhos-api",
   "version": "1.0.0",
   "description": "Api para o sistema gerenciador de trabalhos acadêmicos desenvolvido para o projeto da disciplina de laboratório de software e projetos.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo testes precisam ser implementados"
+    "test": "echo testes precisam ser implementados",
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,8 @@
   },
   "homepage": "https://github.com/Javiercorrear/organizador-trabalhos-api#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1"
   }
 }
