@@ -9,3 +9,5 @@ https://heroku-org-trabalhos-api.herokuapp.com
 
 ## Deploy
 Para publicar a api, basta realizar push para a branch `main` do remoto `heroku`.
+## Logs
+Para obter os logs do servidor, rodar o comando `heroku logs -t`.

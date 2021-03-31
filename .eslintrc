@@ -1,0 +1,87 @@
+{
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        "comma-dangle": ["error", "never"],
+        "no-unused-expressions": "error",
+        "consistent-return": "error",
+        "indent"           : ["error", 4],
+        "no-else-return"   : "error",
+        "semi"             : [1, "never"],
+        "space-unary-ops"  : "error",
+        "no-trailing-spaces": "error",
+        "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+        "one-var": 0,
+        "space-infix-ops": 0,
+        "arrow-parens": "off",
+        "class-methods-use-this": "off",
+        "no-underscore-dangle": "off",
+        "space-in-parens": [ "error", "always" ],
+        "template-curly-spacing": [ "error", "always" ],
+        "object-curly-spacing": [ "error", "always" ],
+        "no-magic-numbers": "warn",
+        "capitalized-comments": "off",
+        "multiline-comment-style": "off",
+        "id-length": "warn",
+        "padded-blocks": "off",
+        "no-param-reassign": "warn",
+        "no-process-env": "off",
+        "array-element-newline": "off",
+        "array-bracket-spacing": ["error", "always"],
+        "max-statements": [ "warn", 50 ],
+        "no-plusplus": "off",
+        "no-ternary": "off",
+        "prefer-destructuring": "off",
+        "quote-props": "off",
+        "object-property-newline": "off",
+        "use-isnan": "error",
+        "function-call-argument-newline": "off",
+        "for-direction": "error",
+        "getter-return": "error",
+        "no-cond-assign": "error",
+        "multiline-ternary": "off",
+        "max-depth": ["error", 4],
+        "arrow-body-style": "warn",
+        "no-extra-parens": "off",
+        "sort-keys": "off",
+        "sort-imports": "off",
+        "no-invalid-this": "warn",
+        "array-bracket-newline": "off",
+        "no-confusing-arrow": [ "error", { "allowParens": true } ],
+        "max-len": [ "error", {
+            "ignoreUrls": true,
+            "ignoreStrings": false,
+            "ignoreTemplateLiterals": true,
+            "ignoreTrailingComments": false,
+            "code": 120,
+            "comments": 120
+        } ],
+        "max-lines": [ "error", {
+            "max": 300,
+            "skipBlankLines": true,
+            "skipComments": true
+        } ],
+        "max-lines-per-function": [ "error", {
+            "max":200,
+            "skipBlankLines": true,
+            "skipComments": true
+        } ],
+        "lines-between-class-members": "off",
+        "space-before-function-paren": ["error", "never"],
+        "computed-property-spacing": ["error", "always"],
+        "dot-location": ["error", "property"]
+    }
+}
