@@ -1,6 +1,9 @@
 {
   "name": "organizador-trabalhos-api",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.x"
+  },
   "description": "Api para o sistema gerenciador de trabalhos acadêmicos desenvolvido para o projeto da disciplina de laboratório de software e projetos.",
   "main": "src/index.js",
   "scripts": {
