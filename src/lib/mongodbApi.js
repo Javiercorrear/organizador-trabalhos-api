@@ -84,7 +84,9 @@ module.exports = {
             const dbCollection = db.collection( collectionName )
 
             document._id = document._id || uuidV1()
-            return dbCollection.insertOne( document )
+            const response = await dbCollection.insertOne( document )
+            const [ insertedDocument ] = response.ops
+            return insertedDocument
         } catch ( error ) {
             console.error( error.stack )
             return null

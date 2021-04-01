@@ -5,7 +5,7 @@ const { json, urlencoded } = require( 'body-parser' )
 
 const userApi = require( './api/user' )
 
-const port = process.env.PORT || 80
+const port = process.env.PORT || 3000
 const app = express()
 
 app.use( json() )
@@ -15,7 +15,7 @@ app.use( cors() )
 app.post( '/user', userApi.createUser )
 
 app.get( '/', ( req, res ) => {
-    res.send( {
+    res.status( 200 ).send( {
         system: 'Organizador de trabalhos acadêmicos',
         team: 'Javier Correa, Kerollyn, Thiago Lacerda'
     } )
