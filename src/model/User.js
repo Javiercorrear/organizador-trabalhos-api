@@ -6,6 +6,13 @@ class User {
         this.userName = userName
         this.password = password
     }
+
+    getFormattedUser() {
+        return {
+            id: this._id,
+            userName: this.userName
+        }
+    }
 }
 
 module.exports = User

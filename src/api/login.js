@@ -7,13 +7,13 @@ const authenticate = async( req, res ) => {
         return res.status( 400 ).send( { msg: `userName e password são obrigatórios.` } )
     }
 
-    const authenticated = await userDataLayer.validatePassword( userName, password )
-    if ( !authenticated ) {
+    const authenticatedUser = await userDataLayer.validatePassword( userName, password )
+    if ( !authenticatedUser ) {
         return res.status( 401 ).send( { msg: 'Nome de usuário ou senha incorreta.' } )
     }
 
-    const response = await userDataLayer.generateToken()
-    return res.status( 200 ).send( response )
+    const token = await userDataLayer.generateToken( authenticatedUser )
+    return res.status( 200 ).send( token )
 }
 
 module.exports = {

@@ -25,13 +25,13 @@ const validatePassword = async( userName, password ) => {
     if ( !user ) {
         return Promise.resolve( false )
     }
-    return bcrypt.compare( password, user.password )
+    return bcrypt.compare( password, user.password ) && new User( user ).getFormattedUser()
 }
 
-const generateToken = async() => {
-    console.log( AUTH_SECRET_KEY )
-    const token = jwt.sign( { user: 'javi' }, `-----BEGIN RSA PRIVATE KEY-----${ AUTH_SECRET_KEY }-----END RSA PRIVATE KEY-----` )
-    return token
+const generateToken = async( data ) => {
+    const privateKey = `-----BEGIN RSA PRIVATE KEY-----\n${ AUTH_SECRET_KEY }\n-----END RSA PRIVATE KEY-----`
+    const options = { algorithm: 'RS256' }
+    return jwt.sign( data, privateKey, options )
 }
 
 module.exports = {
