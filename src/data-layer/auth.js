@@ -11,7 +11,8 @@ const validatePassword = async( userName, password ) => {
     if ( !user ) {
         return Promise.resolve( false )
     }
-    return bcrypt.compare( password, user.password ) && new User( user ).getFormattedUser()
+    const comparisonResult = await bcrypt.compare( password, user.password )
+    return comparisonResult && new User( user ).getFormattedUser()
 }
 
 const generateToken = async( data ) => {
