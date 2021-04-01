@@ -1,5 +1,5 @@
 const userDataLayer = require( '../data-layer/user' )
-const User = require('../model/User')
+const User = require( '../model/User' )
 const strings = require( '../shared/strings' )
 
 const createUser = async( req, res ) => {

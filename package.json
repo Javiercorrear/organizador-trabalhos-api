@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo testes precisam ser implementados",
     "start": "node src/index.js",
-    "start:local": "nodemon"
+    "start:local": "nodemon",
+    "lint": "eslint . --quiet"
   },
   "repository": {
     "type": "git",
