@@ -1,2 +1,3 @@
 MONGO_URI=
 MONGO_DB_NAME=organizador
+PORT=3000
