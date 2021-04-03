@@ -6,7 +6,7 @@ const { json, urlencoded } = require( 'body-parser' )
 const userApi = require( './api/user' )
 const authApi = require( './api/auth' )
 
-const port = process.env.PORT || 80
+const port = process.env.PORT || 3000
 const app = express()
 
 app.use( json() )
