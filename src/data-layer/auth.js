@@ -6,8 +6,8 @@ const User = require( '../model/User' )
 const { AUTH_SECRET_KEY, AUTH_PUBLIC_KEY } = process.env
 const ALGORITHM = 'RS256'
 
-const validatePassword = async( userName, password ) => {
-    const user = await userDataLayer.findUserByUserName( userName )
+const validatePassword = async( email, password ) => {
+    const user = await userDataLayer.findUserByEmail( email )
     if ( !user ) {
         return Promise.resolve( false )
     }

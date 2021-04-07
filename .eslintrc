@@ -84,6 +84,7 @@
         "jest": "readonly",
         "test": "readonly",
         "describe": "readonly",
-        "console": "readonly"
+        "console": "readonly",
+        "expect": "readonly"
     }
 }

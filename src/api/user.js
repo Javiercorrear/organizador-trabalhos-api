@@ -4,14 +4,14 @@ const strings = require( '../shared/strings' )
 
 const createUser = async( req, res ) => {
     try{
-        const { userName, password } = req.body
-        const userAlreadyExists = await userDataLayer.findUserByUserName( userName )
+        const { name, email, password } = req.body
+        const userAlreadyExists = await userDataLayer.findUserByEmail( email )
 
         if ( userAlreadyExists ) {
-            return res.status( 409 ).send( { msg: 'Este nome de usuario já está sendo usado!' } )
+            return res.status( 409 ).send( { msg: 'Este e-mail já está sendo usado!' } )
         }
 
-        const user = await userDataLayer.createUser( userName, password )
+        const user = await userDataLayer.createUser( name, email, password )
         return res.status( 201 ).send( new User( user ).getFormattedUser() )
     } catch ( error ) {
         console.error( error.stack )

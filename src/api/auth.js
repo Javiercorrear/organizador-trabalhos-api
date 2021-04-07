@@ -3,13 +3,13 @@ const authDataLayer = require( '../data-layer/auth' )
 const REQUIRED_TOKEN_PREFIX = 'Bearer'
 
 const authenticate = async( req, res ) => {
-    const { userName, password } = req.body
+    const { email, password } = req.body
 
-    if ( !userName || !password ) {
-        return res.status( 400 ).send( { msg: `userName e password são obrigatórios.` } )
+    if ( !email || !password ) {
+        return res.status( 400 ).send( { msg: `email e password são obrigatórios.` } )
     }
 
-    const authenticatedUser = await authDataLayer.validatePassword( userName, password )
+    const authenticatedUser = await authDataLayer.validatePassword( email, password )
     if ( !authenticatedUser ) {
         return res.status( 401 ).send( { msg: 'Nome de usuário ou senha incorreta.' } )
     }
