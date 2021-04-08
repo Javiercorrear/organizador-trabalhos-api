@@ -1,4 +1,4 @@
-const mongoApi = require( '../lib/mongodbApi' )
+const mongoApi = require( '../lib/mongodb-api/mongodbApi' )
 const bcrypt = require( 'bcrypt' )
 const User = require( '../model/User' )
 

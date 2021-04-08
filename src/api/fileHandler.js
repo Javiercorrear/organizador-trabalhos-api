@@ -1,13 +1,14 @@
 const fileHandlerDataLayer = require( '../data-layer/fileHandler' )
 
 const uploadFile = async( req, res ) => {
-    const { file } = req
+    const { file, user } = req
+    const { description } = req?.body || {}
     if ( !file ) {
         return res.status( 400 ).send( { msg: 'O campo file é necessário.' } )
     }
     try {
-        const response = await fileHandlerDataLayer.fileUpload( file )
-        return res.status( 200 ).send( { fileUri: response } )
+        const newMedia = await fileHandlerDataLayer.fileUpload( file, user.id, description )
+        return res.status( 200 ).send( { ...newMedia } )
     } catch ( error ) {
         console.error( error.stack )
         return res.status( 500 ).send( { msg: 'Um erro aconteceu no lado servidor.' } )

@@ -17,7 +17,7 @@ const bucket = storage.bucket( 'class-works' )
 const uploadImage = async( file ) => new Promise( ( resolve, reject ) => {
     const { originalname, buffer } = file
 
-    const blob = bucket.file( originalname.replace( / /g, '_' ) )
+    const blob = bucket.file( originalname.replace( / /g, '-' ) )
     const blobStream = blob.createWriteStream( {
         resumable: false
     } )
