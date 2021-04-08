@@ -9,7 +9,9 @@ const fileHandleApi = require( './api/fileHandler' )
 
 const port = process.env.PORT || 3000
 const app = express()
-const upload = multer( { dest: '/tmp-uploads' } )
+const storage = multer.memoryStorage()
+const upload = multer( { storage } )
+// const upload = multer( { dest: '/tmp-uploads' } )
 
 app.use( express.json() )
 app.use( express.urlencoded( { extended: true } ) )

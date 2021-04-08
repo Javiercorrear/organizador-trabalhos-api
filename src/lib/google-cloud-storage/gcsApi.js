@@ -14,10 +14,24 @@ const storage = new Storage( {
 
 const bucket = storage.bucket( 'class-works' )
 
-const uploadImage = async( file ) => {
-    const [ response ] = await bucket.upload( file.path, { destination: file.originalname } )
-    const fileUri = encodeURI( response?.metadata?.mediaLink )
-    return fileUri
-}
+const uploadImage = async( file ) => new Promise( ( resolve, reject ) => {
+    const { originalname, buffer } = file
+
+    const blob = bucket.file( originalname.replace( / /g, '_' ) )
+    const blobStream = blob.createWriteStream( {
+        resumable: false
+    } )
+    blobStream.on( 'finish', () => {
+        const publicUrl = encodeURI(
+            `https://storage.googleapis.com/${ bucket.name }/${ blob.name }`
+        )
+        resolve( publicUrl )
+    } )
+        .on( 'error', () => {
+            reject( `Unable to upload image, something went wrong` )
+        } )
+        .end( buffer )
+} )
+
 
 module.exports = { uploadImage }
