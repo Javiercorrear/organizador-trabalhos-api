@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/Javiercorrear/organizador-trabalhos-api#readme",
   "dependencies": {
+    "@google-cloud/storage": "^5.8.3",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",

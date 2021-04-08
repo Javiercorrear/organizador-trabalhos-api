@@ -5,7 +5,7 @@ const multer = require( 'multer' )
 
 const userApi = require( './api/user' )
 const authApi = require( './api/auth' )
-const fileHandleApi = require( './api/fileHandle' )
+const fileHandleApi = require( './api/fileHandler' )
 
 const port = process.env.PORT || 3000
 const app = express()
