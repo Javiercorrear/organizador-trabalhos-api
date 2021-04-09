@@ -1,5 +1,4 @@
-jest.mock( '../../src/lib/mongodbApi' )
-const mongoApi = require( '../../src/lib/mongodbApi' )
+const mongoApi = require( '../../src/lib/mongodb-api/mongodbApi' )
 const userDataLayer = require( '../../src/data-layer/user' )
 const bcrypt = require( 'bcrypt' )
 
