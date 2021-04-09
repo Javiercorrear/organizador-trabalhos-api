@@ -11,7 +11,7 @@ const uploadFile = async( req, res ) => {
         return res.status( 200 ).send( { ...newMedia } )
     } catch ( error ) {
         console.error( error.stack )
-        return res.status( 500 ).send( { msg: 'Um erro aconteceu no lado servidor.' } )
+        return res.status( 500 ).send( { msg: error.message } )
     }
 }
 

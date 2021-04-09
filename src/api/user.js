@@ -1,6 +1,5 @@
 const userDataLayer = require( '../data-layer/user' )
 const User = require( '../model/User' )
-const strings = require( '../shared/strings' )
 
 const createUser = async( req, res ) => {
     try{
@@ -15,7 +14,7 @@ const createUser = async( req, res ) => {
         return res.status( 201 ).send( new User( user ).getFormattedUser() )
     } catch ( error ) {
         console.error( error.stack )
-        return res.status( 500 ).send( { msg: strings.SERVER_ERROR } )
+        return res.status( 500 ).send( { msg: error.message } )
     }
 }
 

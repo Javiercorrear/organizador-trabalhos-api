@@ -9,9 +9,12 @@ const fileHandleApi = require( './api/fileHandler' )
 
 const port = process.env.PORT || 3000
 const app = express()
-const storage = multer.memoryStorage()
-const upload = multer( { storage } )
-// const upload = multer( { dest: '/tmp-uploads' } )
+const megaByteUnit = 1024 * 1024
+const upload = multer( {
+    storage: multer.memoryStorage(),
+    // file no larger than 10mb
+    limits: { fileSize: 10 * megaByteUnit }
+} )
 
 app.use( express.json() )
 app.use( express.urlencoded( { extended: true } ) )
@@ -27,7 +30,8 @@ app.get( '/', ( req, res ) => {
         team: 'Javier Correa, Kerollyn, Thiago Lacerda'
     } )
 } )
-app.get( '/test', authApi.authorize, ( req, res ) => {
+app.get( '/test', authApi.authorize, upload.single( 'file' ), ( req, res ) => {
+    console.log( req.file )
     res.status( 200 ).send( { ...req.user } )
 } )
 
