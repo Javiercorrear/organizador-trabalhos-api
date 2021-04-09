@@ -9,10 +9,9 @@ module.exports = class Media {
         this.description = description || null
     }
 
-    static getFormattedMedia( { _id, userId, fileName, url, description } ) {
+    static getFormattedMedia( { _id, fileName, url, description } ) {
         return {
             id: _id,
-            userId,
             fileName,
             url,
             description
