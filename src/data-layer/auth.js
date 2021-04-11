@@ -17,6 +17,7 @@ const validatePassword = async( email, password ) => {
 
 const generateToken = async( data ) => {
     const privateKey = `-----BEGIN RSA PRIVATE KEY-----\n${ AUTH_SECRET_KEY }\n-----END RSA PRIVATE KEY-----`
+    console.log( privateKey )
     const options = { algorithm: ALGORITHM }
     return jwt.sign( data, privateKey, options )
 }

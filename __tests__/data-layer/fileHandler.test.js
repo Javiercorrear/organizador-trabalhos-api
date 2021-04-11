@@ -2,7 +2,7 @@ jest.mock( 'uuid' )
 const mongoApi = require( '../../src/lib/mongodb-api/mongodbApi' )
 const gcsApi = require( '../../src/lib/google-cloud-storage/gcsApi' )
 const { fileUpload } = require( '../../src/data-layer/fileHandler' )
-const Media = require( '../../src/model/Media' )
+const Classwork = require( '../../src/model/Classwork' )
 const uuid = require( 'uuid' )
 
 const MOCK_GENERATED_UUID = 'mock_uuid'
@@ -18,10 +18,10 @@ const MOCK_FILE = Object.freeze( {
 } )
 
 describe( 'Testing file handler data layer', () => {
-    test( 'fileUpload should call functions with right parameters and return Media formatted data.', async() => {
+    test( 'fileUpload should call functions with right parameters and return Classwork formatted data.', async() => {
         const mockFileUrl = `${ MOCK_USER_ID }_${ MOCK_FILE.originalname }`
         const file = { ...MOCK_FILE }
-        const mockInsertedData = new Media( {
+        const mockInsertedData = new Classwork( {
             _id: MOCK_GENERATED_UUID,
             userId: MOCK_USER_ID,
             fileName: MOCK_FILE.originalname,
@@ -36,7 +36,7 @@ describe( 'Testing file handler data layer', () => {
 
         const response = await fileUpload( file, MOCK_USER_ID, MOCK_DESCRIPTION )
 
-        expect( response ).toEqual( Media.getFormattedMedia( mockInsertedData ) )
+        expect( response ).toEqual( Classwork.getFormattedClasswork( mockInsertedData ) )
         expect( insertSpy ).toBeCalledWith( { document: mockInsertedData, collectionName: 'Media' } )
         expect( uploadImageSpy ).toBeCalledWith( file )
     } )

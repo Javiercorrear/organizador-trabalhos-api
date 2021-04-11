@@ -11,13 +11,26 @@ module.exports = class Classwork {
         this.status = status || statusEnum.ongoing
     }
 
-    static getFormattedClasswork( { _id, fileName, url, description, status } ) {
+    static getFormattedClasswork( { _id, userId, fileName, url, description, status } ) {
         return {
             id: _id,
+            userId,
             fileName,
             url,
             description,
             status
+        }
+    }
+
+    static getProjection() {
+        return {
+            _id: 0,
+            id: '_id',
+            userId: 1,
+            fileName: 1,
+            url: 1,
+            description: 1,
+            status: 1
         }
     }
 }

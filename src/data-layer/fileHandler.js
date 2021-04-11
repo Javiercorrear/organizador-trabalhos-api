@@ -11,7 +11,7 @@ const fileUpload = async( file, userId, description ) => {
     const fileUrl = await gcsApi.uploadImage( file )
     const media = new Classwork( { userId, fileName: originalname, url: fileUrl, description } )
     const insertedMedia = await mongoApi.insertOne( { document: media, collectionName: MEDIA_COLLECTION } )
-    return Classwork.getFormattedMedia( insertedMedia )
+    return Classwork.getFormattedClasswork( insertedMedia )
 }
 
 module.exports = { fileUpload }

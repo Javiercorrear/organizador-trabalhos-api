@@ -47,9 +47,8 @@ module.exports = {
         }
     },
 
-    find: async params => {
+    find: async ( { collectionName, query, projection, skip, limit, sort } ) => {
         try {
-            const { collectionName, query, projection, skip, limit, sort } = params
             let options = {
                 limit: limit || 0,
                 projection,
@@ -58,7 +57,7 @@ module.exports = {
             options = sort ? { ...options, sort } : options
             const db = await connectToDatabase()
             const dbCollection = db.collection( collectionName )
-            const cursor = await dbCollection.find( query, { ...options } )
+            const cursor = await dbCollection.find( query, options )
             return cursor.toArray()
         } catch ( error ) {
             console.error( error.stack )

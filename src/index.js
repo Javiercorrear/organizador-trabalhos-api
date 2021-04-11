@@ -5,7 +5,7 @@ const multer = require( 'multer' )
 
 const userApi = require( './api/user' )
 const authApi = require( './api/auth' )
-const fileHandleApi = require( './api/fileHandler' )
+const classworkApi = require( './api/classwork' )
 
 const port = process.env.PORT || 3000
 const app = express()
@@ -22,7 +22,8 @@ app.use( cors() )
 
 app.post( '/user', userApi.createUser )
 app.post( '/auth/token', authApi.authenticate )
-app.post( '/file', authApi.authorize, upload.single( 'file' ), fileHandleApi.uploadFile )
+app.post( '/classworks', authApi.authorize, upload.single( 'file' ), classworkApi.uploadClasswork )
+app.get( '/classworks', authApi.authorize, classworkApi.getClassWorks )
 
 app.get( '/', ( req, res ) => {
     res.status( 200 ).send( {
