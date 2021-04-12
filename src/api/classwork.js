@@ -2,6 +2,7 @@ const classworkDataLayer = require( '../data-layer/classwork' )
 const { createServerErrorResponse } = require( './apiResponses' )
 
 const uploadClasswork = async( req, res ) => {
+    console.log( req.headers )
     const { file, user } = req
     const { description } = req?.body || {}
     if ( !file ) {
