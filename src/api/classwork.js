@@ -5,9 +5,11 @@ const uploadClasswork = async( req, res ) => {
     console.log( req.headers )
     const { file, user } = req
     const { description } = req?.body || {}
+
     if ( !file ) {
         return res.status( 400 ).send( { msg: 'O campo file é necessário.' } )
     }
+
     try {
         const newMedia = await classworkDataLayer.uploadClasswork( file, user.id, description )
         return res.status( 201 ).send( newMedia )

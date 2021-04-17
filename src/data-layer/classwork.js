@@ -18,6 +18,6 @@ const getClassWorks = async( userId ) => {
 }
 
 module.exports = {
-    uploadClasswork, 
+    uploadClasswork,
     getClassWorks
 }
