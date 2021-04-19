@@ -82,7 +82,13 @@ module.exports = {
             const db = await connectToDatabase()
             const dbCollection = db.collection( collectionName )
 
-            document._id = document._id || uuidV1()
+            const { _id, createdAt, updatedAt } = document || {}
+            const now = new Date()
+
+            document._id = _id || uuidV1()
+            document.createdAt = createdAt || now
+            document.updatedAt = updatedAt || now
+
             const response = await dbCollection.insertOne( document )
             const [ insertedDocument ] = response.ops
             return insertedDocument

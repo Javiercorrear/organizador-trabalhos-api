@@ -4,15 +4,22 @@ const { createServerErrorResponse } = require( './apiResponses' )
 const uploadClasswork = async( req, res ) => {
     console.log( req.headers )
     const { file, user } = req
-    const { description } = req?.body || {}
+    const { description, title, subject, professorName } = req?.body || {}
 
     if ( !file ) {
         return res.status( 400 ).send( { msg: 'O campo file é necessário.' } )
     }
 
     try {
-        const newMedia = await classworkDataLayer.uploadClasswork( file, user.id, description )
-        return res.status( 201 ).send( newMedia )
+        const classWork = await classworkDataLayer.uploadClasswork( {
+            file,
+            userId: user.id,
+            description,
+            title,
+            subject,
+            professorName
+        } )
+        return res.status( 201 ).send( classWork )
     } catch ( error ) {
         return createServerErrorResponse( res, error )
     }

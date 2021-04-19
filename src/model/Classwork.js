@@ -2,35 +2,18 @@ const { v1: uuidV1 } = require( 'uuid' )
 const statusEnum = require( '../shared/classWorkStatusEnum' )
 
 module.exports = class Classwork {
-    constructor( { _id, userId, fileName, url, description, status } ){
+    constructor( { _id, userId, title, subject, professorName, description, mediasIds = [], status } ) {
         this._id = _id || uuidV1()
         this.userId = userId
-        this.fileName = fileName
-        this.url = url || null
+        this.title = title
+        this.subject = subject
+        this.professorName = professorName
         this.description = description || null
+        this.mediasIds = Array.isArray( mediasIds ) ? mediasIds : [ mediasIds ]
         this.status = status || statusEnum.ongoing
     }
 
-    static getFormattedClasswork( { _id, userId, fileName, url, description, status } ) {
-        return {
-            id: _id,
-            userId,
-            fileName,
-            url,
-            description,
-            status
-        }
-    }
-
-    static getProjection() {
-        return {
-            _id: 0,
-            id: '_id',
-            userId: 1,
-            fileName: 1,
-            url: 1,
-            description: 1,
-            status: 1
-        }
+    addMedia( mediaId ) {
+        return Array.isArray( mediaId ) ? this.medias.concat( mediaId ) : this.medias
     }
 }
