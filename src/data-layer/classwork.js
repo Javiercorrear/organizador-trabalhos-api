@@ -5,7 +5,7 @@ const statusEnum = require( '../shared/classWorkStatusEnum' )
 
 const MEDIA_COLLECTION = 'Media'
 
-const uploadClasswork = ( file, userId, description ) => fileHandler.fileUpload( file, userId, description )
+const uploadClasswork = ( { file, userId, description, title, subject, professorName } ) => fileHandler.fileUpload( { file, userId, description, title, subject, professorName } )
 
 const getClassWorks = async( userId ) => {
     const query = { userId }
