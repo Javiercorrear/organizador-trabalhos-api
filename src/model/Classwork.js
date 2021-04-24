@@ -20,6 +20,15 @@ module.exports = class Classwork {
         this.updatedAt = updatedAt || now
     }
 
+    static createDeleteResponse( { deleted = false, exists = false, deletedCount = 0 } ) {
+        return {
+            deleted,
+            exists,
+            deletedCount
+        }
+    }
+
+
     static getFormattedClasswork( {
         _id, userId, fileName, url, title, subject, professorName, description, status, createdAt, updatedAt
     } ) {

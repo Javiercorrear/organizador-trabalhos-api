@@ -47,7 +47,18 @@ module.exports = {
         }
     },
 
-    find: async ( { collectionName, query, projection, skip, limit, sort } ) => {
+    deleteOne: async( { collectionName, query } ) => {
+        try {
+            const db = await connectToDatabase()
+            const dbCollection = db.collection( collectionName )
+            return dbCollection.deleteOne( query )
+        } catch ( error ) {
+            console.error( error.stack )
+            return null
+        }
+    },
+
+    find: async( { collectionName, query, projection, skip, limit, sort } ) => {
         try {
             let options = {
                 limit: limit || 0,

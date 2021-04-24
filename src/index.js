@@ -22,12 +22,14 @@ app.use( cors() )
 
 app.post( '/user', userApi.createUser )
 app.post( '/auth/token', authApi.authenticate )
+
 app.post( '/classworks', authApi.authorize, upload.single( 'file' ), classworkApi.uploadClasswork )
 app.get( '/classworks', authApi.authorize, classworkApi.getClassWorks )
+app.delete( '/classworks/:classWorkId', authApi.authorize, classworkApi.deleteClassWork )
 
 app.get( '/', ( req, res ) => {
     res.status( 200 ).send( {
-        system: 'Organizador de trabalhos acadêmicos',
+        application: 'Organizador de trabalhos acadêmicos',
         team: 'Javier Correa, Kerollyn, Thiago Lacerda'
     } )
 } )

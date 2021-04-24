@@ -6,12 +6,10 @@ const uploadClasswork = async( req, res ) => {
     const { file, user } = req
     const { title, subject, professorName, description } = req?.body || {}
 
-    console.log( 'BODY >>>>>>>>>>>>>>>>>>>>>>>\n', req.body )
-
     const missingRequiredFields = !file || !subject || !title || !professorName
 
     if ( missingRequiredFields  ) {
-        return res.status( 400 ).send( { msg: 'Os campos file, subject, title e professorName são necessários.' } )
+        return res.status( 400 ).send( { msg: 'The fields file, subject, title e professorName are required.' } )
     }
 
     try {
@@ -35,7 +33,27 @@ const getClassWorks = async( req, res ) => {
     }
 }
 
+const deleteClassWork = async( req, res ) => {
+    try{
+        const { user: { id: userId } } = req
+        const { classWorkId } = req.params
+        const { deleted, exists } = await classworkDataLayer.deleteClassWork( userId, classWorkId )
+
+        if ( !exists ) {
+            return res.status( 404 ).send( { msg: `Classwork with id ${ classWorkId } was not found.` } )
+        } else if ( !deleted ) {
+            return res.status( 403 ).send( { msg: `Classwork with id ${ classWorkId } is owned by another user.` } )
+        }
+
+        return res.status( 200 ).send( { msg: `Classwork with id ${ classWorkId } was successfully deleted.` } )
+    } catch ( err ) {
+        console.error( err.stack )
+        return createServerErrorResponse( res, err )
+    }
+}
+
 module.exports = {
     uploadClasswork,
-    getClassWorks
+    getClassWorks,
+    deleteClassWork
 }
