@@ -6,6 +6,8 @@ const uploadClasswork = async( req, res ) => {
     const { file, user } = req
     const { title, subject, professorName, description } = req?.body || {}
 
+    console.log( 'BODY >>>>>>>>>>>>>>>>>>>>>>>\n', req.body )
+
     const missingRequiredFields = !file || !subject || !title || !professorName
 
     if ( missingRequiredFields  ) {
@@ -13,7 +15,9 @@ const uploadClasswork = async( req, res ) => {
     }
 
     try {
-        const newMedia = await classworkDataLayer.uploadClasswork( { file, userId: user.id, title, subject, professorName, description } )
+        const newMedia = await classworkDataLayer.uploadClasswork( {
+            file, userId: user.id, title, subject, professorName, description
+        } )
         return res.status( 201 ).send( newMedia )
     } catch ( error ) {
         return createServerErrorResponse( res, error )
