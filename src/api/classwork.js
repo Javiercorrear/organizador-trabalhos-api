@@ -40,12 +40,12 @@ const deleteClassWork = async( req, res ) => {
         const { deleted, exists } = await classworkDataLayer.deleteClassWork( userId, classWorkId )
 
         if ( !exists ) {
-            return res.status( 404 ).send( { msg: `Classwork with id ${ classWorkId } was not found.` } )
+            return res.status( 404 ).send( { deleted, msg: `Classwork with id ${ classWorkId } was not found.` } )
         } else if ( !deleted ) {
-            return res.status( 403 ).send( { msg: `Classwork with id ${ classWorkId } is owned by another user.` } )
+            return res.status( 403 ).send( { deleted, msg: `Classwork with id ${ classWorkId } is owned by another user.` } )
         }
 
-        return res.status( 200 ).send( { msg: `Classwork with id ${ classWorkId } was successfully deleted.` } )
+        return res.status( 200 ).send( { deleted, msg: `Classwork with id ${ classWorkId } was successfully deleted.` } )
     } catch ( err ) {
         console.error( err.stack )
         return createServerErrorResponse( res, err )
