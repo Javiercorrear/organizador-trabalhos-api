@@ -37,7 +37,7 @@ const deleteClassWork = async( req, res ) => {
     try{
         const { user: { id: userId } } = req
         const { classWorkId } = req.params
-        const { cloudStorageFileName } = req.body
+        const { cloudStorageFileName } = req.query
         const { deleted, exists } = await classworkDataLayer
             .deleteClassWork( userId, classWorkId, cloudStorageFileName )
 
