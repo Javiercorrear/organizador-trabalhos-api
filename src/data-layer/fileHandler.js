@@ -6,12 +6,16 @@ const Classwork = require( '../model/Classwork' )
 const MEDIA_COLLECTION = 'Media'
 
 const fileUpload = async( { file, userId, description, title, subject, professorName } ) => {
-    const { originalname } = file
-    file.originalname = `${ uuidV1() }_${ originalname }`
+    let { originalname } = file
+    originalname = originalname.replace( / /g, '-' )
+
+    const cloudStorageFileName = `${ uuidV1() }_${ originalname }`
+    file.originalname = cloudStorageFileName
     const fileUrl = await gcsApi.uploadImage( file )
     const media = new Classwork( {
         userId,
         fileName: originalname,
+        cloudStorageFileName,
         url: fileUrl,
         title, subject,
         professorName,
@@ -21,4 +25,9 @@ const fileUpload = async( { file, userId, description, title, subject, professor
     return Classwork.getFormattedClasswork( insertedMedia )
 }
 
-module.exports = { fileUpload }
+const removeFile = ( fileName ) => gcsApi.removeFile( fileName )
+
+module.exports = {
+    fileUpload,
+    removeFile
+}

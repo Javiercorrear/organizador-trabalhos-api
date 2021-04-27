@@ -17,7 +17,7 @@ const bucket = storage.bucket( 'class-works' )
 const uploadImage = async( file ) => new Promise( ( resolve, reject ) => {
     const { originalname, buffer } = file
 
-    const blob = bucket.file( originalname.replace( / /g, '-' ) )
+    const blob = bucket.file( originalname )
     const blobStream = blob.createWriteStream( {
         resumable: false
     } )
@@ -33,5 +33,13 @@ const uploadImage = async( file ) => new Promise( ( resolve, reject ) => {
         .end( buffer )
 } )
 
+const removeFile = ( fileName ) => {
+    console.log( `Deleting file ${ fileName }...` )
+    return bucket.file( fileName ).delete()
+}
 
-module.exports = { uploadImage }
+
+module.exports = {
+    uploadImage,
+    removeFile
+}

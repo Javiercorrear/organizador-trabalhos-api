@@ -24,7 +24,7 @@ const getClassWorks = async( userId ) => {
     }
 }
 
-const deleteClassWork = async( userId, classWorkId ) => {
+const deleteClassWork = async( userId, classWorkId, cloudStorageFileName ) => {
     const findQuery = { _id: classWorkId }
     const deleteQuery = { _id: classWorkId, userId }
 
@@ -38,6 +38,9 @@ const deleteClassWork = async( userId, classWorkId ) => {
     if ( classWork?.userId !== userId ) {
         return Classwork.createDeleteResponse( { exists: true } )
     }
+
+    const fileRemoval = await fileHandler.removeFile( cloudStorageFileName )
+    console.log( 'FILE REMOVAL >>>>>>>>>>>>>>>\n', fileRemoval )
 
     const response = await mongoApi.deleteOne( { query: deleteQuery, collectionName: MEDIA_COLLECTION } )
     return Classwork.createDeleteResponse( {

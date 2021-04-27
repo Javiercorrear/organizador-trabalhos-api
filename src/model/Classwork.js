@@ -3,7 +3,18 @@ const statusEnum = require( '../shared/classWorkStatusEnum' )
 
 module.exports = class Classwork {
     constructor( {
-        _id, userId, fileName, url, title, subject, professorName, description, status, createdAt, updatedAt
+        _id,
+        userId,
+        fileName,
+        cloudStorageFileName,
+        url,
+        title,
+        subject,
+        professorName,
+        description,
+        status,
+        createdAt,
+        updatedAt
     } ){
         const now = new Date()
 
@@ -13,6 +24,7 @@ module.exports = class Classwork {
         this.subject = subject
         this.professorName = professorName
         this.fileName = fileName
+        this.cloudStorageFileName = cloudStorageFileName
         this.url = url || null
         this.description = description || null
         this.status = status || statusEnum.ongoing
@@ -30,7 +42,18 @@ module.exports = class Classwork {
 
 
     static getFormattedClasswork( {
-        _id, userId, fileName, url, title, subject, professorName, description, status, createdAt, updatedAt
+        _id,
+        userId,
+        fileName,
+        cloudStorageFileName,
+        url,
+        title,
+        subject,
+        professorName,
+        description,
+        status,
+        createdAt,
+        updatedAt
     } ) {
         return {
             id: _id,
@@ -39,6 +62,7 @@ module.exports = class Classwork {
             subject,
             professorName,
             fileName,
+            cloudStorageFileName,
             url,
             description,
             status,
@@ -53,6 +77,7 @@ module.exports = class Classwork {
             id: '$_id',
             userId: 1,
             fileName: 1,
+            cloudStorageFileName: 1,
             url: 1,
             title: 1,
             subject: 1,

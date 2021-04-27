@@ -37,7 +37,9 @@ const deleteClassWork = async( req, res ) => {
     try{
         const { user: { id: userId } } = req
         const { classWorkId } = req.params
-        const { deleted, exists } = await classworkDataLayer.deleteClassWork( userId, classWorkId )
+        const { cloudStorageFileName } = req.body
+        const { deleted, exists } = await classworkDataLayer
+            .deleteClassWork( userId, classWorkId, cloudStorageFileName )
 
         if ( !exists ) {
             return res.status( 404 ).send( { deleted, msg: `Classwork with id ${ classWorkId } was not found.` } )
