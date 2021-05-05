@@ -1,5 +1,6 @@
 const { v1: uuidV1 } = require( 'uuid' )
 const statusEnum = require( '../shared/classWorkStatusEnum' )
+const FileTypes = require( './FileTypes' )
 
 module.exports = class Classwork {
     constructor( {
@@ -87,5 +88,11 @@ module.exports = class Classwork {
             updatedAt: 1,
             status: 1
         }
+    }
+
+    static validateFileType( file ) {
+        const { originalname: fileName } = file
+        const extension = fileName?.split( '.' )?.pop()
+        return FileTypes.allAcceptedTypes.includes( extension )
     }
 }

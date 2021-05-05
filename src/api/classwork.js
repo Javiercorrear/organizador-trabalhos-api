@@ -1,5 +1,6 @@
 const classworkDataLayer = require( '../data-layer/classwork' )
 const { createServerErrorResponse } = require( './apiResponses' )
+const Classwork = require( '../model/Classwork' )
 
 const uploadClasswork = async( req, res ) => {
     console.log( req.headers )
@@ -10,6 +11,10 @@ const uploadClasswork = async( req, res ) => {
 
     if ( missingRequiredFields  ) {
         return res.status( 400 ).send( { msg: 'The fields file, subject, title e professorName are required.' } )
+    }
+
+    if ( !Classwork.validateFileType( file ) ) {
+        return res.status( 415 ).send( { msg: 'The file type is not supported.' } )
     }
 
     try {
