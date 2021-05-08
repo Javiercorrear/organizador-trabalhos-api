@@ -22,7 +22,7 @@ const getClassWorks = async( userId ) => {
     const classworkList = await mongoApi.find( { collectionName: MEDIA_COLLECTION, query, projection } )
     return {
         ongoing: classworkList?.filter( ( classwork ) => classwork.status === statusEnum.ongoing ) || [],
-        finished: classworkList?.filter( ( classwork ) => classwork.status === statusEnum.finished ) || []
+        done: classworkList?.filter( ( classwork ) => classwork.status === statusEnum.done ) || []
     }
 }
 
