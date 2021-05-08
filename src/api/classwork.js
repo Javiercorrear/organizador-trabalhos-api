@@ -19,6 +19,12 @@ const uploadClasswork = async( req, res ) => {
     }
 
     try {
+        const classworkAlreadyExists = Boolean( await classworkDataLayer.getUserClassWorkByTitle( user.id, title ) )
+
+        if ( classworkAlreadyExists ) {
+            return res.status( 409 ).send( { msg: `This user already has a classwork with the selected title(${ title }).` } )
+        }
+
         const newMedia = await classworkDataLayer.uploadClasswork( {
             file, userId: user.id, title, subject, professorName, description, status, deadline
         } )

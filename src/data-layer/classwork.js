@@ -16,6 +16,11 @@ const uploadClasswork = ( {
     deadline
 } ) => fileHandler.fileUpload( { file, userId, description, title, subject, professorName, status, deadline } )
 
+const getUserClassWorkByTitle = ( userId, title ) => {
+    const query = { userId, title }
+    return mongoApi.findOne( { collectionName: MEDIA_COLLECTION, query } )
+}
+
 const getClassWorks = async( userId ) => {
     const query = { userId }
     const projection = Classwork.getProjection()
@@ -53,5 +58,6 @@ const deleteClassWork = async( userId, classWorkId, cloudStorageFileName ) => {
 module.exports = {
     uploadClasswork,
     getClassWorks,
+    getUserClassWorkByTitle,
     deleteClassWork
 }
