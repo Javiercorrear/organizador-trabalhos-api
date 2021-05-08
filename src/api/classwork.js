@@ -5,12 +5,13 @@ const Classwork = require( '../model/Classwork' )
 const uploadClasswork = async( req, res ) => {
     console.log( req.headers )
     const { file, user } = req
-    const { title, subject, professorName, description } = req?.body || {}
+    const { title, subject, professorName, description, status, deadline } = req?.body || {}
 
-    const missingRequiredFields = !file || !subject || !title || !professorName
+    const missingRequiredFields = !file || !subject || !title || !professorName || !status || !deadline
 
     if ( missingRequiredFields  ) {
-        return res.status( 400 ).send( { msg: 'The fields file, subject, title e professorName are required.' } )
+        return res.status( 400 )
+            .send( { msg: 'The fields file, subject, title, professorName, status and deadline are required.' } )
     }
 
     if ( !Classwork.validateFileType( file ) ) {
@@ -19,7 +20,7 @@ const uploadClasswork = async( req, res ) => {
 
     try {
         const newMedia = await classworkDataLayer.uploadClasswork( {
-            file, userId: user.id, title, subject, professorName, description
+            file, userId: user.id, title, subject, professorName, description, status, deadline
         } )
         return res.status( 201 ).send( newMedia )
     } catch ( error ) {

@@ -5,7 +5,7 @@ const Classwork = require( '../model/Classwork' )
 
 const MEDIA_COLLECTION = 'Media'
 
-const fileUpload = async( { file, userId, description, title, subject, professorName } ) => {
+const fileUpload = async( { file, userId, description, title, subject, professorName, status, deadline } ) => {
     let { originalname } = file
     originalname = originalname.replace( / /g, '-' )
 
@@ -19,6 +19,8 @@ const fileUpload = async( { file, userId, description, title, subject, professor
         url: fileUrl,
         title, subject,
         professorName,
+        status,
+        deadline,
         description
     } )
     const insertedMedia = await mongoApi.insertOne( { document: media, collectionName: MEDIA_COLLECTION } )

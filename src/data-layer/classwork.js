@@ -11,8 +11,10 @@ const uploadClasswork = ( {
     description,
     title,
     subject,
-    professorName
-} ) => fileHandler.fileUpload( { file, userId, description, title, subject, professorName } )
+    professorName,
+    status,
+    deadline
+} ) => fileHandler.fileUpload( { file, userId, description, title, subject, professorName, status, deadline } )
 
 const getClassWorks = async( userId ) => {
     const query = { userId }
@@ -39,9 +41,7 @@ const deleteClassWork = async( userId, classWorkId, cloudStorageFileName ) => {
         return Classwork.createDeleteResponse( { exists: true } )
     }
 
-    const fileRemoval = await fileHandler.removeFile( cloudStorageFileName )
-    console.log( 'FILE REMOVAL >>>>>>>>>>>>>>>\n', fileRemoval )
-
+    await fileHandler.removeFile( cloudStorageFileName )
     const response = await mongoApi.deleteOne( { query: deleteQuery, collectionName: MEDIA_COLLECTION } )
     return Classwork.createDeleteResponse( {
         deleted: Boolean( response.deletedCount ),

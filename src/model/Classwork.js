@@ -12,13 +12,13 @@ module.exports = class Classwork {
         title,
         subject,
         professorName,
-        description,
         status,
+        deadline,
+        description,
         createdAt,
         updatedAt
     } ){
         const now = new Date()
-
         this._id = _id || uuidV1()
         this.userId = userId
         this.title = title
@@ -29,6 +29,7 @@ module.exports = class Classwork {
         this.url = url || null
         this.description = description || null
         this.status = status || statusEnum.ongoing
+        this.deadline = new Date( deadline )
         this.createdAt = createdAt || now
         this.updatedAt = updatedAt || now
     }
@@ -52,6 +53,7 @@ module.exports = class Classwork {
         subject,
         professorName,
         description,
+        deadline,
         status,
         createdAt,
         updatedAt
@@ -66,6 +68,7 @@ module.exports = class Classwork {
             cloudStorageFileName,
             url,
             description,
+            deadline,
             status,
             createdAt,
             updatedAt
@@ -84,6 +87,7 @@ module.exports = class Classwork {
             subject: 1,
             professorName: 1,
             description: 1,
+            deadline: 1,
             createdAt: 1,
             updatedAt: 1,
             status: 1
