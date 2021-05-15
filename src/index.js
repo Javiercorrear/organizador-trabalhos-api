@@ -25,7 +25,9 @@ app.post( '/auth/token', authApi.authenticate )
 
 app.post( '/classworks', authApi.authorize, upload.single( 'file' ), classworkApi.uploadClasswork )
 app.get( '/classworks', authApi.authorize, classworkApi.getClassWorks )
+app.get( '/classworks/:classworkId', authApi.authorize, classworkApi.getClassWorkDetails )
 app.delete( '/classworks/:classWorkId', authApi.authorize, classworkApi.deleteClassWork )
+
 
 app.get( '/', ( req, res ) => {
     res.status( 200 ).send( {
@@ -38,6 +40,6 @@ app.get( '/test', authApi.authorize, upload.single( 'file' ), ( req, res ) => {
     res.status( 200 ).send( { ...req.user } )
 } )
 
-app.listen( port, function() {
-    console.log( `App rodando em http://localhost:${ port }` )
+app.listen( port, () => {
+    console.log( `Server running on http://localhost:${ port }` )
 } )

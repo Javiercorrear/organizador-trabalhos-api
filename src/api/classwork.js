@@ -48,6 +48,20 @@ const getClassWorks = async( req, res ) => {
     }
 }
 
+const getClassWorkDetails = async( req, res ) => {
+    const { classworkId } = req.params
+    try{
+        const classwork = await classworkDataLayer.getClassWorkDetails( classworkId )
+        if ( !classwork ) {
+            console.error( `Classwork with id ${ classworkId } not found.` )
+            return res.status( 404 ).send( { msg: 'Classwork not found.' } )
+        }
+        return res.status( 200 ).send( classwork )
+    } catch ( err ) {
+        return createServerErrorResponse( res, err )
+    }
+}
+
 const deleteClassWork = async( req, res ) => {
     try{
         const { user: { id: userId } } = req
@@ -72,5 +86,6 @@ const deleteClassWork = async( req, res ) => {
 module.exports = {
     uploadClasswork,
     getClassWorks,
-    deleteClassWork
+    deleteClassWork,
+    getClassWorkDetails
 }

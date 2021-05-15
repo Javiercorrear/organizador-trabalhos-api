@@ -31,6 +31,12 @@ const getClassWorks = async( userId ) => {
     }
 }
 
+const getClassWorkDetails = async( classworkId ) => {
+    const query = { _id: classworkId }
+    const classwork = await mongoApi.findOne( { collectionName: MEDIA_COLLECTION, query } )
+    return classwork ? Classwork.getFormattedClasswork( classwork ) : null
+}
+
 const deleteClassWork = async( userId, classWorkId, cloudStorageFileName ) => {
     const findQuery = { _id: classWorkId }
     const deleteQuery = { _id: classWorkId, userId }
@@ -59,5 +65,6 @@ module.exports = {
     uploadClasswork,
     getClassWorks,
     getUserClassWorkByTitle,
-    deleteClassWork
+    deleteClassWork,
+    getClassWorkDetails
 }
