@@ -101,5 +101,34 @@ module.exports = {
             console.error( error.stack )
             return null
         }
+    },
+
+    updateOne: async( collectionName, query, document, additionalOptions = {} ) => {
+        try {
+            const db = await connectToDatabase()
+            const collection = db.collection( collectionName )
+
+            const documentToBeUpdated = document
+
+            documentToBeUpdated._updated_at = new Date()
+            delete documentToBeUpdated.id
+            delete documentToBeUpdated._id
+
+            const update = { '$set': documentToBeUpdated }
+
+            const options = {
+                returnOriginal: false,
+                ...additionalOptions
+            }
+
+            const updatedDocument = await collection.findOneAndUpdate( query, update, options )
+
+            console.log( `Updated document ${ updatedDocument.value._id } into ${ collectionName }.` )
+
+            return updatedDocument.value
+        } catch( error ) {
+            console.error( error.stack )
+            throw new Error( error.message )
+        }
     }
 }

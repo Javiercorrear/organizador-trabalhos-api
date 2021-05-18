@@ -5,6 +5,7 @@ const FileTypes = require( './FileTypes' )
 module.exports = class Classwork {
     constructor( {
         _id,
+        id,
         userId,
         fileName,
         cloudStorageFileName,
@@ -19,7 +20,7 @@ module.exports = class Classwork {
         updatedAt
     } ){
         const now = new Date()
-        this._id = _id || uuidV1()
+        this._id = _id || id || uuidV1()
         this.userId = userId
         this.title = title
         this.subject = subject

@@ -62,6 +62,18 @@ const getClassWorkDetails = async( req, res ) => {
     }
 }
 
+const updateClasswork = async( req, res ) => {
+    const { user: { id: userId } } = req
+    const { classwork } = req.body
+
+    try {
+        const updatedClasswork = await classworkDataLayer.updateClasswork( userId, classwork )
+        return res.status( 200 ).send( updatedClasswork )
+    } catch ( err ) {
+        return createServerErrorResponse( res, err )
+    }
+}
+
 const deleteClassWork = async( req, res ) => {
     try{
         const { user: { id: userId } } = req
@@ -87,5 +99,6 @@ module.exports = {
     uploadClasswork,
     getClassWorks,
     deleteClassWork,
-    getClassWorkDetails
+    getClassWorkDetails,
+    updateClasswork
 }

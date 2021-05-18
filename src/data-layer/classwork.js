@@ -81,8 +81,18 @@ const deleteClassWork = async( userId, classWorkId, cloudStorageFileName ) => {
 
 const updateClasswork = async( userId, classwork, newFile = null ) => {
     if ( newFile ) {
-        await deleteClassWork( userId, classwork._id, classwork.cloudStorageFileName )
+        const [ fileUploadResponse ] = await Promise.all( [
+            fileHandler.fileUpload( newFile ),
+            deleteClassWork( userId, classwork._id, classwork.cloudStorageFileName )
+        ] )
+        classwork.url = fileUploadResponse.fileUrl
+        classwork.cloudStorageFileName = fileUploadResponse.cloudStorageFileName
     }
+
+    const updatedClasswork = new Classwork( { ...classwork, updatedAt: new Date() } )
+
+    const query = { _id: classwork._id }
+    return mongoApi.updateOne( MEDIA_COLLECTION, query, updatedClasswork )
 }
 
 module.exports = {
