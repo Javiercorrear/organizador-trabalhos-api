@@ -5,7 +5,7 @@ const statusEnum = require( '../shared/classWorkStatusEnum' )
 
 const MEDIA_COLLECTION = 'Media'
 
-const uploadClasswork = ( {
+const uploadClasswork = async( {
     file,
     userId,
     description,
@@ -14,7 +14,24 @@ const uploadClasswork = ( {
     professorName,
     status,
     deadline
-} ) => fileHandler.fileUpload( { file, userId, description, title, subject, professorName, status, deadline } )
+} ) => {
+    const { originalname } = file
+    const { fileUrl, cloudStorageFileName } = await fileHandler.fileUpload( file )
+
+    const media = new Classwork( {
+        userId,
+        fileName: originalname,
+        cloudStorageFileName,
+        url: fileUrl,
+        title, subject,
+        professorName,
+        status,
+        deadline,
+        description
+    } )
+    const insertedMedia = await mongoApi.insertOne( { document: media, collectionName: MEDIA_COLLECTION } )
+    return Classwork.getFormattedClasswork( insertedMedia )
+}
 
 const getUserClassWorkByTitle = ( userId, title ) => {
     const query = { userId, title }
@@ -38,6 +55,7 @@ const getClassWorkDetails = async( classworkId ) => {
 }
 
 const deleteClassWork = async( userId, classWorkId, cloudStorageFileName ) => {
+    //TODO: separate concerns. The deletion itself should be isolated from the rest of the logic.
     const findQuery = { _id: classWorkId }
     const deleteQuery = { _id: classWorkId, userId }
 
@@ -61,10 +79,17 @@ const deleteClassWork = async( userId, classWorkId, cloudStorageFileName ) => {
     } )
 }
 
+const updateClasswork = async( userId, classwork, newFile = null ) => {
+    if ( newFile ) {
+        await deleteClassWork( userId, classwork._id, classwork.cloudStorageFileName )
+    }
+}
+
 module.exports = {
     uploadClasswork,
     getClassWorks,
     getUserClassWorkByTitle,
     deleteClassWork,
-    getClassWorkDetails
+    getClassWorkDetails,
+    updateClasswork
 }
