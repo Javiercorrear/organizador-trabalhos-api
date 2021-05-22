@@ -31,8 +31,8 @@ module.exports = class Classwork {
         this.description = description || null
         this.status = status || statusEnum.ongoing
         this.deadline = new Date( deadline )
-        this.createdAt = createdAt || now
-        this.updatedAt = updatedAt || now
+        this.createdAt = new Date( createdAt ) || now
+        this.updatedAt = new Date( updatedAt ) || now
     }
 
     static createDeleteResponse( { deleted = false, exists = false, deletedCount = 0 } ) {

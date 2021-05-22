@@ -63,12 +63,26 @@ const getClassWorkDetails = async( req, res ) => {
 }
 
 const updateClasswork = async( req, res ) => {
-    const { user: { id: userId } } = req
-    const { classwork } = req.body
-
     try {
-        const updatedClasswork = await classworkDataLayer.updateClasswork( userId, classwork )
-        return res.status( 200 ).send( updatedClasswork )
+        const { file } = req
+        const { classwork } = req.body
+        const { classworkId } = req.params
+
+        const parsedClasswork = JSON.parse( classwork )
+        const { userId, cloudStorageFileName } = parsedClasswork
+
+        if ( !userId || !cloudStorageFileName ) {
+            return res.status( 400 ).send( {
+                msg: 'One of the following fields are missing in the classwork: userId, id, cloudStorageFileName'
+            } )
+        }
+        if ( file && !Classwork.validateFileType( file ) ) {
+            return res.status( 415 ).send( { msg: 'The file type is not supported.' } )
+        }
+        const updatedClasswork = await classworkDataLayer.updateClasswork( userId, classworkId, parsedClasswork, file )
+        return updatedClasswork
+            ? res.status( 200 ).send( updatedClasswork )
+            : res.status( 404 ).send( { msg: 'Classwork not found.' } )
     } catch ( err ) {
         return createServerErrorResponse( res, err )
     }

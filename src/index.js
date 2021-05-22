@@ -25,6 +25,7 @@ app.post( '/auth/token', authApi.authenticate )
 
 app.post( '/classworks', authApi.authorize, upload.single( 'file' ), classworkApi.uploadClasswork )
 app.get( '/classworks', authApi.authorize, classworkApi.getClassWorks )
+app.patch( '/classworks/:classworkId', authApi.authorize, upload.single( 'file' ), classworkApi.updateClasswork )
 app.get( '/classworks/:classworkId', authApi.authorize, classworkApi.getClassWorkDetails )
 app.delete( '/classworks/:classWorkId', authApi.authorize, classworkApi.deleteClassWork )
 

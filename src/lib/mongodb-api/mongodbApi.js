@@ -123,8 +123,11 @@ module.exports = {
 
             const updatedDocument = await collection.findOneAndUpdate( query, update, options )
 
-            console.log( `Updated document ${ updatedDocument.value._id } into ${ collectionName }.` )
-
+            if ( updatedDocument.value ) {
+                console.log( `Updated document ${ updatedDocument?.value?._id } into ${ collectionName }.` )
+            } else {
+                console.log( `No documents were found` )
+            }
             return updatedDocument.value
         } catch( error ) {
             console.error( error.stack )

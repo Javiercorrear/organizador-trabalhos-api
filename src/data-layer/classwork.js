@@ -5,6 +5,7 @@ const statusEnum = require( '../shared/classWorkStatusEnum' )
 
 const MEDIA_COLLECTION = 'Media'
 
+// TODO: Separate document insertion, file upload and object creation.
 const uploadClasswork = async( {
     file,
     userId,
@@ -15,8 +16,8 @@ const uploadClasswork = async( {
     status,
     deadline
 } ) => {
-    const { originalname } = file
-    const { fileUrl, cloudStorageFileName } = await fileHandler.fileUpload( file )
+    const { originalname } = file || {}
+    const { fileUrl, cloudStorageFileName } = file ? await fileHandler.fileUpload( file ) : {}
 
     const media = new Classwork( {
         userId,
@@ -79,20 +80,29 @@ const deleteClassWork = async( userId, classWorkId, cloudStorageFileName ) => {
     } )
 }
 
-const updateClasswork = async( userId, classwork, newFile = null ) => {
+const updateClasswork = async( userId, classworkId, classwork, newFile ) => {
     if ( newFile ) {
+        const { originalname } = newFile
         const [ fileUploadResponse ] = await Promise.all( [
             fileHandler.fileUpload( newFile ),
-            deleteClassWork( userId, classwork._id, classwork.cloudStorageFileName )
+            fileHandler.removeFile( classwork.cloudStorageFileName )
         ] )
+        classwork.fileName = originalname
         classwork.url = fileUploadResponse.fileUrl
         classwork.cloudStorageFileName = fileUploadResponse.cloudStorageFileName
     }
 
-    const updatedClasswork = new Classwork( { ...classwork, updatedAt: new Date() } )
+    const classworkToUpdate = new Classwork( { ...classwork, updatedAt: new Date() } )
 
-    const query = { _id: classwork._id }
-    return mongoApi.updateOne( MEDIA_COLLECTION, query, updatedClasswork )
+    const query = { _id: classworkId }
+    const updatedClasswork = await mongoApi.updateOne( MEDIA_COLLECTION, query, classworkToUpdate )
+    if ( updatedClasswork ) {
+        return Classwork.getFormattedClasswork( updatedClasswork )
+    } else if ( newFile ) {
+        // remove previously inserted file if the classwork is not found
+        fileHandler.removeFile( classwork.cloudStorageFileName )
+    }
+    return null
 }
 
 module.exports = {
