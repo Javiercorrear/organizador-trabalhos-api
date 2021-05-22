@@ -1,4 +1,5 @@
 require( 'dotenv' ).config()
+const path = require( 'path' )
 const express = require( 'express' )
 const cors = require( 'cors' )
 const multer = require( 'multer' )
@@ -20,6 +21,8 @@ app.use( express.json() )
 app.use( express.urlencoded( { extended: true } ) )
 app.use( cors() )
 
+app.use( express.static( path.join( __dirname, '..', 'docs' ) ) )
+
 app.post( '/user', userApi.createUser )
 app.post( '/auth/token', authApi.authenticate )
 
@@ -29,13 +32,6 @@ app.patch( '/classworks/:classworkId', authApi.authorize, upload.single( 'file' 
 app.get( '/classworks/:classworkId', authApi.authorize, classworkApi.getClassWorkDetails )
 app.delete( '/classworks/:classWorkId', authApi.authorize, classworkApi.deleteClassWork )
 
-
-app.get( '/', ( req, res ) => {
-    res.status( 200 ).send( {
-        application: 'Organizador de trabalhos acadêmicos',
-        team: 'Javier Correa, Kerollyn, Thiago Lacerda'
-    } )
-} )
 app.get( '/test', authApi.authorize, upload.single( 'file' ), ( req, res ) => {
     console.log( req.file )
     res.status( 200 ).send( { ...req.user } )
