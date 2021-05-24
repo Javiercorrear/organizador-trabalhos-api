@@ -67,7 +67,7 @@ const updateClasswork = async( req, res ) => {
         const { file } = req
         const { classwork } = req.body
         const { classworkId } = req.params
-
+console.log( 'CLASSWORK >>>>>>>>>>>>>>\n', classwork )
         const parsedClasswork = JSON.parse( classwork )
         const { userId, cloudStorageFileName } = parsedClasswork
 
