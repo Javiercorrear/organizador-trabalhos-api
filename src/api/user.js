@@ -1,9 +1,18 @@
 const userDataLayer = require( '../data-layer/user' )
+const { validateEmail, validatePassword } = require( '../shared/stringUtils' )
 const User = require( '../model/User' )
 
 const createUser = async( req, res ) => {
     try{
         const { name, email, password, passwordConfirmation } = req.body
+        if( !validateEmail( email ) ) {
+            return res.status( 400 ).send( { msg: 'Formato de e-mail inválido!' } )
+        }
+        if( !validatePassword( password ) ) {
+            return res.status( 400 ).send( {
+                msg: 'Sua senha deve conter ao menos 6 caracteres e conter uma letra maiúscula ou número.'
+            } )
+        }
         const userAlreadyExists = await userDataLayer.findUserByEmail( email )
 
         if ( userAlreadyExists ) {
